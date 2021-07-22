@@ -1,20 +1,25 @@
 import random
-import os
+from os import system
 import hanged as h
 hh = h.HANGMAN_IMAGES
 
-def script(arrayWord):
-  word = [i for i in arrayWord]
-  word = len(word)
-  underscore = '_'
-  underscoreWord = []
+def play(word , underscord):
+  wordList = list(word)
+  underscordList = list(underscord)
+  lyric = ''
 
-  for i in range(word - 1):
-    underscoreWord.append(underscore)
-    underscoreWord.append('  ')
+  while wordList != underscordList or lyric == '  ':
+    lyric = input('Tu primer intento : ')
 
-  underscoreWord = "".join(underscoreWord)
-  return underscoreWord
+
+    for i in range(0, len(wordList)):
+      if wordList[i] == lyric:
+        underscordList[i] = wordList[i]
+      else:
+        system('clear')
+    print(' '.join(underscordList).upper())
+
+  print('Ganaste!!!')
 
 def normalize(s):
   replacements = (
@@ -30,11 +35,10 @@ def normalize(s):
 
 def read():
   with open('./docs/data.txt', 'r', encoding='utf-8') as f:
-    words = [i for i in f]
-    random_word = random.randint(0, 170)
+    words = [i.replace('\n', '') for i in f]
+    random_word = random.randint(0, len(words))
     word = words[random_word]
 
-  print(word)
   return word
 
 def run():
@@ -64,26 +68,21 @@ def run():
   3.- Pierdes si completas el ahorcado (Cuentas con 6 intestentos)
 
   
-  _____    ____    __  __   ______   _   _   ______  ______   __  __    ____     _____ 
+   _____    ____    __  __   ______   _   _   ______  ______   __  __    ____     _____ 
   / ____|  / __ \  |  \/  | |  ____| | \ | | |___  / |  ____| |  \/  |  / __ \   / ____|
-  | |      | |  | | | \  / | | |__    |  \| |    / /  | |__    | \  / | | |  | | | (___  
-  | |      | |  | | | |\/| | |  __|   | . ` |   / /   |  __|   | |\/| | | |  | |  \___ \ 
-  | |____  | |__| | | |  | | | |____  | |\  |  / /__  | |____  | |  | | | |__| |  ____) |
+  | |     | |  | | | \  / | | |__    |  \| |    / /  | |__    | \  / | | |  | | | (___  
+  | |     | |  | | | |\/| | |  __|   | . ` |   / /   |  __|   | |\/| | | |  | |  \___ \ 
+  | |____ | |__| | | |  | | | |____  | |\  |  / /__  | |____  | |  | | | |__| |  ____) |
   \_____|  \____/  |_|  |_| |______| |_| \_| /_____| |______| |_|  |_|  \____/  |_____/ 
   """)
   print(hh[0])
   word = read()
   wordNormalize = normalize(word)
-  print(wordNormalize)
-  underscord = script(wordNormalize)
-  print(underscord)
-
-  lyrics = input('Tu primer intento: ')
+  underscord = '_' * (len(word))
+  print(' '.join(underscord))
   
-  os.system('cls')
 
-  for i in word:
-    print(i)
+  play(word, underscord)
 
 if __name__ == '__main__':
   run()
