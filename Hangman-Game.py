@@ -1,5 +1,5 @@
 import random
-from os import system
+import os
 import hanged as h
 hh = h.HANGMAN_IMAGES
 
@@ -7,19 +7,27 @@ def play(word , underscord):
   wordList = list(word)
   underscordList = list(underscord)
   lyric = ''
-
+  
   while wordList != underscordList or lyric == '  ':
     lyric = input('Tu primer intento : ')
-
-
+    accountant = 1
+    os.system('cls')
     for i in range(0, len(wordList)):
       if wordList[i] == lyric:
         underscordList[i] = wordList[i]
-      else:
-        system('clear')
+    
+
     print(' '.join(underscordList).upper())
 
-  print('Ganaste!!!')
+  print("""Ganaste!!!
+             +----+
+                  |
+                  |
+            \O/   |
+             |    |
+            / \   |
+            =========
+  """)
 
 def normalize(s):
   replacements = (
@@ -82,7 +90,7 @@ def run():
   print(' '.join(underscord))
   
 
-  play(word, underscord)
+  play(wordNormalize, underscord)
 
 if __name__ == '__main__':
   run()
